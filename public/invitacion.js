@@ -37,6 +37,8 @@ if (Number.isFinite(start)) {
   dateLabel.dateTime = evento.fecha
   dateLabel.textContent = format.format(start)
   byId('cover-date').textContent = dateLabel.textContent
+  byId('hero-date').textContent = dateLabel.textContent
+  byId('hero-date').dateTime = evento.fecha
 } else {
   dateLabel.textContent = 'Fecha por confirmar'
 }
@@ -80,6 +82,7 @@ byId('open').addEventListener('click', () => {
     byId('title').focus({ preventScroll: true })
     window.scrollTo(0, 0)
     if (Number.isFinite(start)) countdown()
+    startParallax()
     celebrate()
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) {
@@ -89,7 +92,7 @@ byId('open').addEventListener('click', () => {
         }
       }
     }, { threshold: 0.14 })
-    for (const part of document.querySelectorAll('#dedication, .act-card, .actividad')) {
+    for (const part of document.querySelectorAll('#portrait, #dedication, .act-card, .actividad')) {
       observer.observe(part)
     }
   }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 120 : 1450)
@@ -106,4 +109,24 @@ function celebrate() {
     ribbon.addEventListener('animationend', () => ribbon.remove(), { once: true })
     shower.append(ribbon)
   }
+}
+
+function startParallax() {
+  const hero = document.querySelector('.hero')
+  const motion = matchMedia('(prefers-reduced-motion: reduce)')
+  let frame = 0
+  function render() {
+    frame = 0
+    const bounds = hero.getBoundingClientRect()
+    const offset = Math.max(0, Math.min(bounds.height, -bounds.top))
+    hero.style.setProperty('--photo-shift', Math.min(90, offset * .32) + 'px')
+    hero.style.setProperty('--title-shift', -Math.min(64, offset * .17) + 'px')
+  }
+  function schedule() {
+    if (!frame && !motion.matches) frame = requestAnimationFrame(render)
+  }
+  window.addEventListener('scroll', schedule, { passive: true })
+  window.addEventListener('resize', schedule)
+  motion.addEventListener('change', schedule)
+  schedule()
 }

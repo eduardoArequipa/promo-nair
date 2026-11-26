@@ -1,7 +1,7 @@
 // Usar rutas como /retrato.jpg y /cancion.mp3 para archivos guardados en public/.
 // Una fecha sin hora cuenta hasta el comienzo del día en Tarija. Para fijar la hora, usar AAAA-MM-DDTHH:mm:00-04:00.
 export const evento = {
-  nombre: '',
+  nombre: 'Nair Alejandro Arequipa Cruz',
   iniciales: '',
   retrato: '/nair1.jpg',
   cancion: '/cancion.mp3',
