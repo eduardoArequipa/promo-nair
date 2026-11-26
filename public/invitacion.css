@@ -45,13 +45,10 @@ main{padding:clamp(14px,3vw,48px);background:repeating-linear-gradient(45deg,tra
 #date { font-size: 1.2rem; }
 #music {
   position: fixed;
-  left: max(12px, env(safe-area-inset-left));
+  right: max(16px, env(safe-area-inset-right));
   bottom: max(16px, env(safe-area-inset-bottom));
   z-index: 3;
   box-shadow: 0 4px 16px #0e2f2933;
-}
-@media (max-width: 480px) {
-  #music { bottom: calc(64px + env(safe-area-inset-bottom)); }
 }
 @keyframes falling-ribbon {
   to { transform: translate3d(var(--drift), 100svh, 0) rotate(470deg) rotateY(300deg); opacity: 0; }
